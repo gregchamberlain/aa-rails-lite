@@ -43,7 +43,7 @@ when "g" || "generate"
     File.open(@target + "/models/" + ARGV[2].singularize.underscore + ".rb", "w") do |f|
       f.write("class #{ARGV[2].singularize.camelize} < ModelBase\n\n  # DO NOT REMOVE\n  finalize!\nend")
     end
-    create_migration("create_" + ARGV[2].singularize.underscore)
+    create_migration("create_" + ARGV[2].pluralize.underscore)
   when "controller"
     name = (ARGV[2] + "Controller").underscore
     Dir.mkdir @target + "/views/" + ARGV[2].downcase
