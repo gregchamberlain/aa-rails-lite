@@ -18,10 +18,44 @@ class Route
   def run(req, res)
     regex = Regexp.new @pattern
     match_data = regex.match(req.path)
-    params = req.params
+    params = Params.new(req.params)
     match_data.names.each { |name| params[name] = match_data[name] }
     controller = @controller_class.new(req, res, params)
     controller.invoke_action(@action_name)
+  end
+end
+
+class Params
+
+  def initialize(params = {})
+    @params = params
+  end
+
+  def [](key)
+    @params[key]
+  end
+
+  def []=(key, val)
+    @params[key] = val
+  end
+
+  def require(*keys)
+    result = Params.new({})
+    keys.each do |key|
+      val = @param[key]
+      throw Exception if val.nil?
+      result[key] = val
+    end
+    result
+  end
+
+  def permit(*keys)
+    result = Params.new({})
+    keys.each do |key|
+      val = @param[key]
+      result[key] = val
+    end
+    result
   end
 end
 
