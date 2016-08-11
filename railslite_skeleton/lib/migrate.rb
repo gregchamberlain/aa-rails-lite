@@ -14,7 +14,7 @@ files.each do |file|
   cols = cols[0...-1]
   DBConnection.execute2(<<-SQL)
     CREATE TABLE #{name} (
-      ID INTEGER PRIMARY KEY,#{cols}
+      id INTEGER PRIMARY KEY,#{cols}
     )
   SQL
 end
